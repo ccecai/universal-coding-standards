@@ -72,8 +72,22 @@ Default to Ponytail full mode. Higher-priority instructions, explicit user
 requirements, and applicable project rules take precedence over these defaults.
 ```
 
-将路径改成实际安装位置。在 Cursor 中，将同样的要求放入客户端的持久规则；
-也可以通过项目 `AGENTS.md` 将要求限定在该项目。
+将路径改成实际安装位置。
+
+### Cursor：让所有项目默认遵守
+
+打开 **Customize → Rules**，新增或编辑一条 **User Rule（用户规则）**，将上面的要求
+合并进去。用户规则适用于各项目的 Agent；仅添加项目规则或项目 `AGENTS.md`，
+不能达到全局默认启用的效果。保留其他已有用户规则，并补充下面的执行要求：
+
+```text
+When I ask to "规范代码", "规范", "规范一下", or "按规范整理" in a coding task,
+execute the Code normalization requests workflow in universal-coding-standards.
+```
+
+Cursor 也能发现已有的 `~/.codex/skills` 安装。在用户规则中引用真实文件路径，
+不必再复制一份。检查该规则列在 **User** 下，且 Customize 的 **Skills** 中能看到技能。
+这些是本地 Agent 的默认规则，远程环境需要单独配置。
 
 ## 使用方法
 
@@ -86,7 +100,24 @@ $universal-coding-standards 按通用代码规范完成这次改动。
 
 在 Cursor 中输入 `/`，从命令列表选择 `universal-coding-standards`。
 检查安装时，可以让助手列出当前生效的全局和项目规则，并确认两个配套文件都能读取。
-引用示例或讨论与代码无关的文章，不会因此变成编码任务。本 skill 不增加单独的审批流程。
+本 skill 不增加单独的审批流程。
+
+### 整理改动的代码
+
+```text
+规范代码
+规范
+规范一下这次改动的代码
+按规范整理 src/example.c，保持功能不变
+```
+
+这些编码请求会实际整理代码，不是只列检查清单。在正在处理代码的上下文中，
+单独输入“规范”也会执行。指定了文件、选区或差异，就按指定范围处理；未指定时，
+检查暂存、未暂存及相关新增代码，只整理改动行和必要的周边代码。
+遵守项目工具和风格，保留原有功能及用户改动，并汇报实际检查结果。
+没有改动代码也没有目标时，会请用户指定范围，不会直接整理整个仓库。
+整理过程不会自动暂存或提交。引用示例、明确说不要整理、询问规范含义，或要求修改
+这个 skill 本身，都不会被当成修改业务代码的授权。
 
 ## 文件与更新
 
