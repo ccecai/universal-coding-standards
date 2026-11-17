@@ -1,0 +1,5 @@
+interface:
+  display_name: "Universal Coding Standards"
+  short_description: "Default coding standards for every project"
+policy:
+  allow_implicit_invocation: true
