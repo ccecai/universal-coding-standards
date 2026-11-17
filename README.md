@@ -77,8 +77,24 @@ Default to Ponytail full mode. Higher-priority instructions, explicit user
 requirements, and applicable project rules take precedence over these defaults.
 ```
 
-Adjust the paths to the real installation. For Cursor, add an equivalent instruction
-to the host's persistent rules; a project `AGENTS.md` can scope it to that project.
+Adjust the paths to the real installation.
+
+### Cursor: enable across all projects
+
+Open **Customize → Rules**, add or edit a **User Rule**, and merge the same
+instruction above into it. User Rules apply to Agent across projects; a project
+rule or project `AGENTS.md` alone does not enable a global default. Preserve other
+user rules. Add this line for explicit cleanup requests:
+
+```text
+When I ask to "规范代码", "规范", "规范一下", or "按规范整理" in a coding task,
+execute the Code normalization requests workflow in universal-coding-standards.
+```
+
+Cursor can also discover an existing `~/.codex/skills` installation. Reference its
+actual files in the User Rule instead of creating a second copy. Confirm the rule
+is listed under **User** and the skill appears under **Skills** in Customize.
+These are local Agent defaults; remote environments need their own setup.
 
 ## Use it
 
@@ -91,8 +107,25 @@ $universal-coding-standards Apply the shared standards to this change.
 
 In Cursor, type `/` and select `universal-coding-standards` from the command picker.
 To check the setup, ask the agent to list its active global and project rules and
-confirm that both companion files are readable. Quoted examples or unrelated prose
-requests do not create a coding task. This skill adds no separate approval workflow.
+confirm that both companion files are readable. This skill adds no separate approval workflow.
+
+### Normalize changed code
+
+```text
+规范代码
+规范
+规范一下这次改动的代码
+按规范整理 src/example.c，保持功能不变
+```
+
+These coding requests execute corrections, not just a checklist explanation. A bare
+`规范` in an active coding context also starts normalization. An explicit target
+takes precedence; otherwise the agent checks staged, unstaged, and relevant new code,
+then fixes changed lines and necessary surrounding code. It follows project tools
+and conventions, preserves behavior and existing edits, and reports actual checks.
+No changed code and no target means it asks for a target, not a repository-wide cleanup.
+It does not stage or commit those edits. Quoted examples, negative requests, questions
+about standards, and requests to edit this skill do not authorize code normalization.
 
 ## Files and updates
 
