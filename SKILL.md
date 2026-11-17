@@ -3,9 +3,11 @@ name: universal-coding-standards
 description: >-
   Applies default engineering conventions across all projects when writing,
   changing, fixing, refactoring, reviewing, or designing code, including
-  dependency choices. Complements Ponytail and Caveman with architecture,
-  correctness, C/C++ conventions, build checks, and commit discipline.
-  Does not apply to unrelated prose or general knowledge requests.
+  dependency choices. Also execute scoped code normalization when the user asks
+  to "规范代码", "规范", "规范一下", "按规范整理", or standardize changed code.
+  Complements Ponytail and Caveman with engineering conventions and checks.
+  Quoted examples, explanations, and skill-authoring requests do not authorize
+  code normalization; unrelated prose and general knowledge are out of scope.
 ---
 
 # Universal Coding Standards
@@ -29,6 +31,34 @@ adds the engineering conventions below without duplicating those instructions.
   keep project-specific details in the repository rather than copying them here.
 - Apply language and hardware requirements only where relevant. English skill
   text does not change the requested response language or project comment style.
+
+## Code normalization requests
+
+When the user's coding request includes "规范代码", "规范", "规范一下", or
+"按规范整理" with an intent to standardize code, execute this workflow rather
+than only explaining the rules. A bare "规范" in an active coding context uses
+the default scope below. Ordinary coding tasks still follow the standards but
+do not authorize a separate cleanup pass. Quoted examples, negative requests,
+questions about standards, and editing this skill do not authorize code edits.
+
+1. **Choose the scope.** Honor the user's specified files, selection, diff, or
+   commit. Otherwise inspect `git status --short`, `git diff`, and
+   `git diff --cached`; normalize staged, unstaged, and relevant new code files.
+   Work on changed lines and the smallest surrounding units needed for valid,
+   consistent code. If there is no changed code or identifiable target, report
+   that and ask for a target instead of reformatting the repository.
+2. **Read the local rules and flow.** Check neighboring style and applicable
+   instructions before editing. Preserve existing user edits and staged state;
+   do not stage, unstage, reset, commit, or push as part of normalization.
+3. **Apply minimal corrections.** Fix relevant layout, whitespace, naming,
+   declaration placement, comments, constants, macros, and affected warnings.
+   Prefer repository formatters and checks, constrain their range where possible,
+   and inspect their diff. Preserve behavior, interfaces, protocols, calibration,
+   and safety controls. Report unrelated defects or necessary behavior changes
+   separately; do not introduce them as formatting fixes.
+4. **Validate and report.** Run `git diff --check`, the relevant formatter/linter,
+   and required repository audits, builds, and tests. Report corrected rule
+   categories, actual check results, remaining warnings, and unverified items.
 
 ## Engineering conventions
 
